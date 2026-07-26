@@ -1,38 +1,30 @@
-/*
- * ====================================================================
- *   TEST SERIAL COMMAND MINIMALIS (ESP8266)
- *   Digunakan untuk mengetes komunikasi HP Android <-> ESP8266
- * ====================================================================
- */
-
 void setup() {
-  // Aktifkan komunikasi serial di baud rate 115200
+  // Memulai serial di 115200 bps
   Serial.begin(115200);
-  delay(1000);
+  delay(500);
   
-  // Kirim tanda sapaan ke Serial Monitor HP
-  Serial.println("\r\n\r\n========================================");
-  Serial.println("[TEST] ESP8266 Serial Test Berhasil Booting!");
-  Serial.println("[TEST] Silakan ketik 'ping' atau 'status'");
-  Serial.println("========================================");
+  // Pesan tanda berhasil booting
+  Serial.println("\r\n[SUKSES] ESP8266 Siap Menerima Perintah!");
 }
 
 void loop() {
-  // Mengecek apakah ada data teks masuk dari aplikasi Android
+  // Mengecek apakah ada data masuk dari HP
   if (Serial.available() > 0) {
     String cmd = Serial.readStringUntil('\n');
-    cmd.trim(); // Membersihkan karakter enter/spasi ekstra (\r / \n)
+    cmd.trim(); // Membersihkan spasi/enter ekstra
 
     if (cmd == "ping") {
-      Serial.println("[ESP Response] Pong! Koneksi Serial Aman 100%.");
+      Serial.println("Pong! Terhubung dengan baik.");
     } 
     else if (cmd == "status") {
-      Serial.println("[ESP Response] Status Board: Normal & Siap Digunakan.");
+      Serial.println("Status: Board Normal & Stabil.");
     } 
     else if (cmd.length() > 0) {
-      Serial.print("[ESP Response] Perintah tidak dikenal: '");
-      Serial.print(cmd);
-      Serial.println("' (Tapi teks berhasil diterima ESP!)");
+      Serial.print("Echo: ");
+      Serial.println(cmd);
     }
   }
+  
+  // Mencegah watchdog reset
+  yield();
 }
