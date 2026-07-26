@@ -1,4 +1,4 @@
-name: Compile ESP8266 Firmware (Manual)
+name: Compile ESP8266 Firmware release (Manual)
 
 on:
   workflow_dispatch:
