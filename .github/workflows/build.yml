@@ -37,14 +37,14 @@ jobs:
         run: |
           arduino-cli compile --fqbn esp8266:esp8266:nodemcuv2 ./${{ github.event.inputs.sketch_folder }} --output-dir ./build
 
-      - name: Rename and Zip Binary
+      - name: Rename Binary File
         run: |
           cd ./build
           mv *.bin ${{ github.event.inputs.sketch_folder }}.bin
-          zip ${{ github.event.inputs.sketch_folder }}.zip ${{ github.event.inputs.sketch_folder }}.bin
 
-      - name: Upload Zip Artifact
+      - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.sketch_folder }}-package
-          path: ./build/${{ github.event.inputs.sketch_folder }}.zip
+          path: ./build/${{ github.event.inputs.sketch_folder }}.bin
+
